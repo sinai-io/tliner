@@ -22,7 +22,7 @@ Analyze `$ARGUMENTS` to extract:
 **IDs** - Match pattern `20YYMMDDTHHMMSS.ffffffZ` or timestamp-like strings:
 - If task_id(s) provided explicitly (`$ARGUMENTS`) -> MANDATORY use them and ONLY them
 - Else if there is MEMORIZED taskId(s) from the last `/save` command -> MANDATORY use them and ONLY them
-- Else -> ask user for the task_id
+- Else -> no ID filter; default time to "today" if no time phrases in $ARGUMENTS either
 - Multiple IDs allowed
 
 **Time phrases** - Common patterns:
@@ -98,7 +98,7 @@ mcp__timeliner__get_steps(
 /load MkDocs bugs since Monday              # Keywords + time
 /load authentication flow, login problems   # Multiple keywords (OR logic)
 /load 20251204T182649.123456Z auth          # ID + keyword filter
-/load                                       # Use MEMORIZED taskId or ask
+/load                                       # Use MEMORIZED taskId or default to today
 ```
 
 ## Working Style
