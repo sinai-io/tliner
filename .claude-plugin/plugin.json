@@ -1,0 +1,13 @@
+{
+  "name": "tliner",
+  "version": "0.5.2",
+  "description": "🌟 AI's diary: track the work with the markdown log",
+  "author": {"name": "Sinai RnD"},
+  "skills": ["./skills/"],
+  "mcpServers": {
+    "timeliner": {
+      "command": "uvx",
+      "args": ["tliner@latest", "serve"]
+    }
+  }
+}

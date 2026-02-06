@@ -1,0 +1,15 @@
+{
+    "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'MANDATORY. Preserve the EXACT VALUE(s) of current tliner TASK_ID (format: YYYYMMDDTHHMMSS.ffffffZ). Add it to the end of the Summary, for example: `Tliner TASK_ID: 20251225T211153.467845Z`'"
+          }
+        ]
+      }
+    ]
+  }
+}
