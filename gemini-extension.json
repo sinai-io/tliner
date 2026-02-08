@@ -1,6 +1,6 @@
 {
   "name": "tliner",
-  "version": "0.5.0",
+  "version": "0.5.2",
   "description": "AI's diary: track the work with markdown log",
   "contextFileName": "GEMINI.md",
   "mcpServers": {
