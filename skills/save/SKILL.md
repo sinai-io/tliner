@@ -10,6 +10,7 @@ Execute the save operation according to the next rules.
 $ARGUMENTS
 
 ## Flow
+
 0. **MANDATORY GOLDEN RULE**:
    - For **Summary section**: Write like you're explaining to a colleague in Slack. Short sentences. Simple words. Lazy and direct.
    - For **Facts & Resources sections**: Preserve EXACT details VERBATIM - full paths, complete commands, actual URLs, precise error messages. DO NOT summarize.
@@ -17,8 +18,10 @@ $ARGUMENTS
         - ✅ Good Format: "Tried X. Got Y. Outcomes is Z"
         - ✅ GOOD: "Tried `/api/user` endpoint. Got 404. Fixed route in `src/routes.py#L42`."
         - ✅ GOOD: "Parser crashed on `test.json`. Missing null check in `lexer.cpp#L289`. Added guard."
+        - ✅ GOOD: "Looking for a new console lib. Found 5 options. Here's comparison table between options:..."
         - ❌ BAD: "An investigation was conducted regarding the API endpoint configuration, which revealed that the routing mechanism was not properly configured to handle user-related requests."
 1.  **Generate Content**:
+    *   Outcomes includes both: RESULTS of the work and the METHOD used to achive them. You MUST to save BOTH.
     *   Carefully enumerate what you know so far
     *   Generate the outcomes for the current step following the "Content Structure" and "Rules".
 2.  **Self-Review** (MANDATORY before saving):
@@ -33,18 +36,18 @@ $ARGUMENTS
     *   Call `mcp__timeliner__save_step` with the following parameters:
         *   `task_id`: Use the memorized `task_id` if you have one. If this is the first time saving for this task, send an **empty string** (`""`). The system will create a new task and return the new `task_id`.
         *   `title`: Up to 5 words which represent essence of the step.
-        *   `outcomes`: The exact content that you just generated.
+        *   `summary`: Describe current step summary and general flow of investigation (strip the heading). Max 500 chars. Must be a standalone TL;DR — readable without the full outcomes.
+        *   `outcomes`: The exact content that you just generated (all sections including Summary).
     *   **VERY IMPORTANT**: If a new `task_id` is returned, you MUST memorize it for all future `save_step` calls for this task.
 
 ## Content Structure
 
-1. **Summary**: Describe current step summary and general flow of investigation.
-2. **User Input**: Note EXACTLY ALL user's inputs and direction they want to go.
-3. **Facts**: Paste outcomes as facts with EXACT details. Preserve user-provided paths, commands, and descriptions VERBATIM. OUTCOMES = what was produced (artifacts, findings, decisions, researches).
+1. **User Input**: Note EXACTLY ALL user's inputs and direction they want to go.
+2. **Facts**: Paste outcomes as facts with EXACT details. Preserve user-provided paths, commands, and descriptions VERBATIM. OUTCOMES = what was produced (artifacts, findings, decisions, researches).
    - ✅ GOOD: "Rebuilt kernel with `CONFIG_DEBUG_INFO=y`. Boot time dropped from 8.2s to 3.1s. Traced delay to initramfs decompression in `init/initramfs.c#L647`."
    - ❌ BAD: "The kernel configuration was modified to enable debugging information. Performance improvements were observed during the boot sequence. Analysis revealed that initialization delays were attributable to decompression operations."
-4. **Resources**: Note ALL resources used VERBATIM (files, links, tools, commands) with full paths/URLs. NO summarization.
-5. **Lessons Learned**: *Avoid to add this section in MOST cases*, except:
+3. **Resources**: Note ALL resources used VERBATIM (files, links, tools, commands) with full paths/URLs. NO summarization.
+4. **Lessons Learned**: *Avoid to add this section in MOST cases*, except:
     - **Use for**: User-insisted memories ("NEVER", "ALWAYS", "MEMORIZE").
     - **NEVER for:** Task-specific observations, general outcomes, history, what you did in this step.
     - **Format**: Short fundamental rules. Up to 10 items (max 200 characters each).
