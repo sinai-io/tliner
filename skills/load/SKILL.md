@@ -77,6 +77,8 @@ mcp__timeliner__get_steps(
 )
 ```
 
+**WARNING**: Do NOT override `max_tokens` unless you have a strong reason. The default (10000) is tuned to stay within safe output limits. Increasing it risks "result exceeds maximum allowed tokens" errors.
+
 **MANDATORY**: Read ALL pages by default. Make sequential calls with page=1, page=2, ... until page == total_pages. Only stop early on user explicit request.
 
 ### 4. **Understand**
