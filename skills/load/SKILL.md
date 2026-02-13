@@ -10,6 +10,7 @@ Universal data retrieval from the Timeline. Accepts composable filters (AND logi
 - **IDs**: Task or step ID (e.g., `20251217T084803.537626Z`)
 - **Time phrases**: Natural language (e.g., "last week", "since Monday", "3 days ago")
 - **Keywords**: Fuzzy search in title/outcomes/tags (multiple keywords use OR logic)
+- **Summaries mode**: `summaries` keyword → lightweight response (summary + metadata, no outcomes)
 
 $ARGUMENTS
 
@@ -30,6 +31,11 @@ Analyze `$ARGUMENTS` to extract:
 - "since Monday", "since December 1"
 - "2 days ago", "yesterday", "today"
 - "from X to Y", "between X and Y"
+
+**Summaries** - Lightweight mode:
+- If `$ARGUMENTS` contains the word `summaries` → set `summaries_only=True`
+- Remove `summaries` from arguments before keyword extraction
+- Returns step metadata + summary only, no full outcomes (saves context)
 
 **Keywords** - Everything else:
 - Remaining words after extracting IDs and time phrases
@@ -66,11 +72,12 @@ mcp__timeliner__get_steps(
   until="...",        # ISO timestamp or "" if no time filter
   ids=[...],          # Array of IDs or None if no ID filter
   query=["kw1", "kw2"],  # Array of keywords or None (OR logic - matches ANY)
-  page=1
+  page=1,
+  summaries_only=true/false  # true when "summaries" mode detected
 )
 ```
 
-**MANDATORY**: Read ALL pages by default. Make sequential calls with page=1, page=2, ... until page == total_pages. Only stop early if user explicitly requests specific page(s).
+**MANDATORY**: Read ALL pages by default. Make sequential calls with page=1, page=2, ... until page == total_pages. Only stop early on user explicit request.
 
 ### 4. **Understand**
 
@@ -99,6 +106,8 @@ mcp__timeliner__get_steps(
 /load authentication flow, login problems   # Multiple keywords (OR logic)
 /load 20251204T182649.123456Z auth          # ID + keyword filter
 /load                                       # Use MEMORIZED taskId or default to today
+/load summaries last week                   # Summaries only (no outcomes) + time filter
+/load summaries                             # Summaries for today
 ```
 
 ## Working Style
