@@ -1,20 +1,20 @@
 ---
 name: tliner:report
 description: "Your progress summary. Use when generating work summaries, creating status reports, or reviewing progress on specific topics. Usage: [task_id | topic] [since] [until]"
-allowed_tools: ["Read", "mcp__timeliner__get_steps", "mcp__timeliner__task_list"]
+allowed_tools: ["Skill", "mcp__timeliner__get_steps", "mcp__timeliner__task_list"]
 ---
 
 # Task
 
 Generate a formatted summary of work done on a specific topic by analyzing Task Data in the Timeline.
 
-> **Note**: This command uses the same time parsing and keyword filtering logic as `/load` (see `load.md`).
-> execute `/load` then add formatting and grouping on top per the next rules.
+> **Note**: This command uses the same time parsing and keyword filtering logic as `/load`.
+> Execute `/load` then add formatting and grouping on top per the next rules.
 
 
-### 1. Execute `/load` (`load.md`)
+### 1. Execute `/load`
 
-- read `load.md` file and execute it with the  $ARGUMENTS
+- Execute `/load` skill with $ARGUMENTS
 
 ### 2. Analyze and Group Steps
 

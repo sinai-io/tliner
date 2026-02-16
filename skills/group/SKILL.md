@@ -1,7 +1,7 @@
 ---
 name: tliner:group
 description: "Consolidate scattered steps into coherent tasks. Usage: [task_id | topic] [since] [until]"
-allowed_tools: ["Read", "mcp__timeliner__get_steps", "mcp__timeliner__group_steps", "mcp__timeliner__task_list"]
+allowed_tools: ["Skill", "mcp__timeliner__get_steps", "mcp__timeliner__group_steps", "mcp__timeliner__task_list"]
 ---
 
 ## Task
@@ -12,9 +12,9 @@ $ARGUMENTS
 
 ## Flow: Load Summaries → Analyze → Group → Execute
 
-### Phase 1. Load Summaries via `/load` (`load.md`)
+### Phase 1. Load Summaries via `/load`
 
-- Read `load.md` file and execute it with `summaries $ARGUMENTS`
+- Execute `/load` skill with `summaries $ARGUMENTS`
 - This passes `summaries_only=True` to get lightweight step data (summary + metadata, no full outcomes)
 - Summaries carry enough signal for grouping decisions while saving context
 
