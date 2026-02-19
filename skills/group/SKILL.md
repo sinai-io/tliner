@@ -1,7 +1,7 @@
 ---
 name: tliner:group
 description: "Consolidate scattered steps into coherent tasks. Usage: [task_id | topic] [since] [until]"
-allowed_tools: ["Skill", "mcp__timeliner__get_steps", "mcp__timeliner__group_steps", "mcp__timeliner__task_list"]
+allowed-tools: Skill, mcp__timeliner__group_steps
 ---
 
 ## Task

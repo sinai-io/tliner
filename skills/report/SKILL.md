@@ -1,7 +1,7 @@
 ---
 name: tliner:report
 description: "Your progress summary. Use when generating work summaries, creating status reports, or reviewing progress on specific topics. Usage: [task_id | topic] [since] [until]"
-allowed_tools: ["Skill", "mcp__timeliner__get_steps", "mcp__timeliner__task_list"]
+allowed-tools: Skill
 ---
 
 # Task

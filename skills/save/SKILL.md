@@ -1,7 +1,7 @@
 ---
 name: tliner:save
 description: "Save findings/outcomes into a Timeline. Use when documenting work progress, storing investigation outcomes, recording completed steps, or creating permanent records of research/debugging/implementation work."
-allowed_tools: ["Read", "Write", "Edit", "Glob", "LS", "mcp__timeliner__task_create", "mcp__timeliner__save_step", "mcp__timeliner__show_task"]
+allowed-tools: mcp__timeliner__save_step
 ---
 
 # Task
@@ -12,7 +12,7 @@ $ARGUMENTS
 ## Flow
 
 0. **MANDATORY GOLDEN RULE**:
-   - For **Summary section**: Write like you're explaining to a colleague in Slack. Short sentences. Simple words. Lazy and direct.
+   - For **`summary` param**: Write like you're explaining to a colleague in Slack. Short sentences. Simple words. Lazy and direct. Do NOT put summary inside outcomes.
    - For **Facts & Resources sections**: Preserve EXACT details VERBATIM - full paths, complete commands, actual URLs, precise error messages. DO NOT summarize.
    - Examples:
         - ✅ Good Format: "Tried X. Got Y. Outcomes is Z"
@@ -37,7 +37,7 @@ $ARGUMENTS
         *   `task_id`: Use the memorized `task_id` if you have one. If this is the first time saving for this task, send an **empty string** (`""`). The system will create a new task and return the new `task_id`.
         *   `title`: Up to 5 words which represent essence of the step.
         *   `summary`: Describe current step summary and general flow of investigation (strip the heading). Max 500 chars. Must be a standalone TL;DR — readable without the full outcomes.
-        *   `outcomes`: The exact content that you just generated (all sections including Summary).
+        *   `outcomes`: The exact content that you just generated (all sections EXCEPT Summary — summary goes only in the `summary` param above).
     *   **VERY IMPORTANT**: If a new `task_id` is returned, you MUST memorize it for all future `save_step` calls for this task.
 
 ## Content Structure
@@ -57,7 +57,7 @@ $ARGUMENTS
 
 ## Rules
 1. **Title**: The `outcomes` content MUST NOT include the title. The title is passed as a separate `title` parameter to the tool.
-2. **Content Headings**: All main sections within the `outcomes` (e.g., Summary, Facts, User Input) MUST start with a level 2 heading (`##`). Do NOT use level 1 headings.
+2. **Content Headings**: All main sections within the `outcomes` (e.g., Facts, User Input, Resources) MUST start with a level 2 heading (`##`). Do NOT use level 1 headings.
 3. **Avoids**: NO conclusions, NO hypothesis, NO proposals, NO assumptions, NO speculations, NO generalizations.
 4. **Terminology**: Do not use "final", "real solution", "ultimate", "perfect", "best", "ideal", "correct" - use "current" instead. We are documenting current state of investigation, not final solution.
 5. **Evidence**: Including evidences for statements is mandatory:

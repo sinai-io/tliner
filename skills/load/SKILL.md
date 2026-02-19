@@ -1,7 +1,7 @@
 ---
 name: tliner:load
 description: "Restore previous work into context (most relevant first). Use when resuming previous work, searching for past investigations, retrieving specific task history, or filtering by time/keywords. Usage: [task_id | keywords] [since] [until]"
-allowed_tools: ["Read", "Write", "Glob", "mcp__timeliner__get_steps"]
+allowed-tools: mcp__timeliner__get_steps
 ---
 
 ## Task
