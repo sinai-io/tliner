@@ -81,7 +81,8 @@ mcp__timeliner__get_steps(
 
 **Pagination**:
 - If `total_pages == 1` → done
-- If `total_pages > 1` → ask the user: "There are X more pages. Load remaining?"
+- If `total_pages <= 3` → read the second and third page, using MCP `get_steps()` parameter `page`
+- If `total_pages > 3` → ask the user: "There are X more pages. How many pages do you want to read (or all)?"
 - If `pagination.warnings` is non-empty → READ warnings FIRST, then decide strategy:
   - Warnings signal large result sets that may blow context window
   - Follow advice in warnings (narrow filters, use summaries_only, delegate to subagent)
