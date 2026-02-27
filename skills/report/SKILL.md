@@ -18,58 +18,75 @@ Generate a formatted summary of work done on a specific topic by analyzing Task 
 
 ### 2. Analyze and Group Steps
 
-Group by temporal proximity (1-2 days) and thematic similarity. Each group = one "Approach" section (aim for 2-5).
+Group by **thematic similarity** (not temporal proximity). Chronological order within each theme.
+Each group = one topic section (aim for 2-5).
 
-Extract per approach:
-- Main activities (from outcomes)
+Extract per topic:
+- Key findings and results (from outcomes)
 - Implementation details (files, functions, algorithms)
-- Results/status (completed, in progress, blocked)
-- Metadata (PR links, commits, issues)
+- Status (completed, in progress, blocked)
+- Links (PR/MR references, commits, issues)
 
 ### 3. Generate Report
 
-0. **MANDATORY GOLDEN RULE**: Write like you're explaining to a colleague in Slack.
-   - Short sentences. Simple words.  Lazy and direct.
-   - Casual BUT keep full technical precision: exact commands, complete file paths, detailed stack traces.
-   - Examples:
-      - ✅ Good Format: "Tried X. Got Y. Fixed Z in file"
-	  - ✅ GOOD: "Tried `/api/user` endpoint. Got 404. Fixed route in `src/routes.py#L42`."
-	  - ✅ GOOD: "Parser crashed on `test.json`. Missing null check in `lexer.cpp#L289`. Added guard."
-	  - ❌ BAD: "An investigation was conducted regarding the API endpoint configuration, which revealed that the routing mechanism was not properly configured to handle user-related requests."
+#### Writing Rules
 
-**Format:**
+0. **MANDATORY GOLDEN RULE**: Write like you're explaining to a colleague in Slack.
+   - Short sentences. Simple words. Lazy and direct.
+   - Casual BUT keep full technical precision.
+
+1. **State findings, not process.** Lead with what you found, not what you did.
+   - ✅ "3 callsites cause soft lockups: BPF JIT, icache flush, jump label patching"
+   - ❌ "Pulled kernel logs from 5 containers. Found 3 distinct callsites causing soft lockups..."
+
+2. **One fact per bullet.** If a bullet has two facts — split it.
+   - ✅ "vcpu doubles boot time (125s vs 63s)"
+   - ✅ "half the penalty is cp -rp sysfs overlay (34.3s vs 3.3s)"
+   - ❌ "vcpu config doubles boot time (125s vs 63s). The cp -rp sysfs overlay is 10x slower with vcpu (34.3s vs 3.3s) — accounts for half the penalty."
+
+3. **Max ~20 words per bullet.** Forces conciseness. If longer — split.
+
+4. **Front-load key numbers and results.** Setup context goes second.
+   - ✅ "boot reliability: base 100%, vcpu 80%, standalone 60%"
+   - ❌ "Ran automated 15-CVD boot test (5 per config). Results: base 5/5 (100%)..."
+
+5. **Skip the narrative.** Don't tell the story of how you got there.
+
+6. **Bad examples to avoid:**
+   - ❌ "An investigation was conducted regarding the API endpoint configuration, which revealed that the routing mechanism was not properly configured."
+   - ❌ "Launched 2 containers side-by-side for clean comparison: vcpu config doubles boot time..."
+
+#### Format
+
 ```markdown
 # Report: [Topic Name]
-**Time period:** [parsed time period or "All time"]
-**Generated:** [current UTC timestamp]
+**Period:** [parsed time range or "All time"]  |  **Generated:** [current UTC timestamp]
+
+## TL;DR
+[1-3 sentences. The headline. What happened, what's the bottom line.]
 
 ---
 
-## Approach 1: [Descriptive Name]
+## [Topic/Theme Name]
 
-- [Key activity 1 with brief implementation detail]
-- [Key activity 2 with brief implementation detail]
-- [Key activity 3 with brief implementation detail]
-- [Result/outcome achieved]
+- [finding/result — one fact, ~20 words max]
+- [finding/result]
+- [finding/result]
+- 🔗 PR #123, #456
 
 **Status:** [Completed/In progress/Blocked]
 
 ---
 
-## Approach 2: [Descriptive Name]
+## [Another Topic]
 
 ...
 
 ---
-```
 
-**Writing style:**
-- 3-5 bullets per approach, past tense
-- Include technical details (files, algorithms) but stay concise
-- No code blocks or function signatures
-- 1-2 sentences per bullet
-- Final bullet = result/outcome
-- Status: Completed, In progress, or Blocked
+## Blockers / Remaining
+- [what's stuck or left to do — omit section if nothing]
+```
 
 ### 4. Output Report
 
@@ -79,8 +96,8 @@ Print the fully formatted markdown report to terminal for user review.
 ## Edge Cases and Notes
 
 - **No matches**: Print "No work found for [topic] in period" and exit
-- **Single step**: Create one approach section
-- **Missing metadata**: Omit if not present
+- **Single step**: Create one topic section, still include TL;DR
+- **Missing metadata**: Omit links line if not present
 - **Ambiguous time format**: Ask user to clarify
 - **Calendar week**: "last week" always refers to previous Monday-Sunday period
 - **Exclusive end date**: `until` parameter excludes the boundary (steps < until, not <=)
