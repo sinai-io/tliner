@@ -1,7 +1,7 @@
 ---
 name: tliner:load
 description: "Restore previous work into context (most relevant first). Use when resuming previous work, searching for past investigations, retrieving specific task history, or filtering by time/keywords. Usage: [task_id | keywords] [since] [until]"
-allowed_tools: ["Read", "Write", "Glob", "mcp__timeliner__get_steps"]
+allowed-tools: mcp__timeliner__get_steps
 ---
 
 ## Task
@@ -79,9 +79,11 @@ mcp__timeliner__get_steps(
 
 **WARNING**: Do NOT override `max_tokens` unless you have a strong reason. The default (10000) is tuned to stay within safe output limits. Increasing it risks "result exceeds maximum allowed tokens" errors.
 
-**MANDATORY**:
-- If no/empty `pagination.warnings` → read ALL pages sequentially (page=1, page=2, ... until page == total_pages)
-- If `pagination.warnings`  is non-empty → READ warnings FIRST, then decide strategy:
+**Pagination**:
+- If `total_pages == 1` → done
+- If `total_pages <= 3` → read the second and third page, using MCP `get_steps()` parameter `page`
+- If `total_pages > 3` → ask the user: "There are X more pages. How many pages do you want to read (or all)?"
+- If `pagination.warnings` is non-empty → READ warnings FIRST, then decide strategy:
   - Warnings signal large result sets that may blow context window
   - Follow advice in warnings (narrow filters, use summaries_only, delegate to subagent)
   - Do NOT blindly read all pages when warnings are present
